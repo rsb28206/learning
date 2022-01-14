@@ -11,12 +11,16 @@
 |
 */
 
-Route::get('/tasks', 'TaskController@getAll');
+Route::group(['middleware' => ['api', 'cors']], function(){
 
-Route::post('/task', 'TaskController@create');
+    Route::get('/tasks', 'TaskController@getAll');
 
-Route::delete('/task/{task}', 'TaskController@delete');
+    Route::post('/task', 'TaskController@create');
 
-Route::match(['put', 'patch'],'/task/{task}', 'TaskController@update');
+    Route::delete('/task/{task}', 'TaskController@delete');
 
-Route::match(['put', 'patch'],'/task/{task}/completed', 'TaskController@completed');
+    Route::match(['put', 'patch'],'/task/{task}', 'TaskController@update');
+
+    Route::match(['put', 'patch'],'/task/{task}/completed', 'TaskController@completed');
+
+});
